@@ -1,6 +1,6 @@
 name: Apple Presubmit Audit
 description: Run a credential-free Apple App Store pre-submit audit and upload SARIF.
-author: XJM-free
+author: Zemixo
 
 branding:
   icon: check-circle
