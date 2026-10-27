@@ -1,6 +1,8 @@
 # Apple App Store Pre-Submit Audit
 
-[![Tests](https://github.com/XJM-free/apple-presubmit-audit/actions/workflows/tests.yml/badge.svg)](https://github.com/XJM-free/apple-presubmit-audit/actions/workflows/tests.yml)
+<img src="https://raw.githubusercontent.com/zemixo/apple-presubmit-audit/main/quiet-orbit-banner.svg" alt="App Store Preflight: Check before you submit. Zemixo pixel robot workshop." width="100%">
+
+[![Tests](https://github.com/zemixo/apple-presubmit-audit/actions/workflows/tests.yml/badge.svg)](https://github.com/zemixo/apple-presubmit-audit/actions/workflows/tests.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](https://www.python.org/downloads/)
 [![MIT License](https://img.shields.io/badge/license-MIT-2ea44f.svg)](./LICENSE)
 
@@ -12,6 +14,8 @@ release risks.
 It is a preflight assistant, not an App Review guarantee. The checks combine
 [Apple's published guidelines](https://developer.apple.com/app-store/review/guidelines/)
 with conservative, submission-derived heuristics.
+
+[Quick start](#quick-start) · [Rules](#machine-readable-rule-catalog) · [CI integration](#github-code-scanning-in-five-minutes) · [Limitations](#limitations)
 
 ```text
 🔴 MyApp                [passed=24 skipped=0 total=27] blockers=1
@@ -25,6 +29,8 @@ with conservative, submission-derived heuristics.
 ```
 
 The output above is illustrative.
+
+---
 
 ## What it checks
 
@@ -56,7 +62,7 @@ Install the current source checkout in an isolated environment. This repository
 does not claim a package-index release:
 
 ```bash
-git clone https://github.com/XJM-free/apple-presubmit-audit.git
+git clone https://github.com/zemixo/apple-presubmit-audit.git
 cd apple-presubmit-audit
 
 python3 -m venv .venv
@@ -177,7 +183,7 @@ permissions:
 
 steps:
   - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-  - uses: XJM-free/apple-presubmit-audit@FULL_RELEASE_COMMIT_SHA
+  - uses: zemixo/apple-presubmit-audit@FULL_RELEASE_COMMIT_SHA
 ```
 
 Both integrations deliberately use `--no-asc`: no issuer ID, key ID, or private
@@ -278,3 +284,7 @@ fixture when possible.
 ## License
 
 [MIT](./LICENSE)
+
+---
+
+<sub>Made by [Zemixo](https://github.com/zemixo) · Small tools. Made with care.</sub>
