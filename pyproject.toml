@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
-authors = [{name = "Quiet Orbit"}]
+authors = [{name = "Zemixo"}]
 dynamic = ["dependencies"]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -30,9 +30,9 @@ classifiers = [
 apple-presubmit-audit = "apple_presubmit_audit.audit:main"
 
 [project.urls]
-Homepage = "https://github.com/XJM-free/apple-presubmit-audit"
-Repository = "https://github.com/XJM-free/apple-presubmit-audit"
-Issues = "https://github.com/XJM-free/apple-presubmit-audit/issues"
+Homepage = "https://github.com/zemixo/apple-presubmit-audit"
+Repository = "https://github.com/zemixo/apple-presubmit-audit"
+Issues = "https://github.com/zemixo/apple-presubmit-audit/issues"
 
 [tool.setuptools]
 packages = ["apple_presubmit_audit"]
