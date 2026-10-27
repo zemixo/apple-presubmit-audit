@@ -101,7 +101,7 @@ def verify_wheel(path):
         if metadata["License-Expression"] != "MIT":
             fail("wheel metadata must use the MIT license expression")
         if (
-            metadata["Author"] != "Quiet Orbit"
+            metadata["Author"] != "Zemixo"
             or metadata["Author-email"]
             or metadata["Maintainer-email"]
         ):
