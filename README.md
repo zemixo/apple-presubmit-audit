@@ -164,6 +164,11 @@ after it. The fixture manifest distinguishes reproduced runtime failures from
 release-audit findings and does not present either as an App Review rejection.
 All values are recalculated from real `audit_app` output in the test suite.
 
+Focused synthetic tests also exercise sign-in, notification authorization,
+account deletion, CloudKit schema metadata, AI request bodies, and URL-probe
+success and failure paths. URL responses are isolated test doubles; these
+tests do not verify a live site, a deployed schema, or an application's UI.
+
 ## GitHub Code Scanning in five minutes
 
 Copy

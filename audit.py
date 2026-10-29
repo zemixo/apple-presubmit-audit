@@ -667,7 +667,7 @@ def audit_app(root, asc):
             "Apple marker; manually check Guideline 4.8 and its exceptions")
 
     # 4.5.4 — advisory scan for notification authorization flow
-    if "UNUserNotificationCenter" in " ".join(grep_dir(root, "UNUserNotificationCenter")):
+    if grep_dir(root, "UNUserNotificationCenter"):
         # Soft check: ensure opt-in dialog code exists
         has_optin = bool(grep_dir(root, r"requestAuthorization|requestNotificationAuthorization"))
         advisory("4.5.4 push-opt-in", "high", has_optin,

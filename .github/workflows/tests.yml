@@ -42,6 +42,7 @@ jobs:
       - name: Compile Python sources
         run: >-
           python -m py_compile audit.py tests/test_audit.py
+          tests/test_conditional_rules.py
           tests/test_github_action.py tests/test_packaging.py
           tests/verify_distribution.py tests/smoke_installed_cli.py
 

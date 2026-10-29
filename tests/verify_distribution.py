@@ -160,6 +160,7 @@ def verify_sdist(path):
             ),
             f"{root}/tests/fixtures/production-regressions/cases.json",
             f"{root}/tests/test_audit.py",
+            f"{root}/tests/test_conditional_rules.py",
             f"{root}/tests/test_github_action.py",
             f"{root}/tests/test_packaging.py",
         }

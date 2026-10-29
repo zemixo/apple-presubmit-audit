@@ -227,7 +227,7 @@ class AuditRuleTests(unittest.TestCase):
             synthetic_families = {
                 family_for(rule_id)
                 for rule_id, _severity, _passed, _message
-                in audit.audit_app(root, self._coverage_metadata())
+                in self._audit_coverage_project(root)
             }
 
         conditional_families = synthetic_families - baseline_families
@@ -252,7 +252,7 @@ class AuditRuleTests(unittest.TestCase):
         }
 
         self.assertEqual(expected, actual)
-        self.assertIn("not-exercised", actual.values())
+        self.assertNotIn("not-exercised", actual.values())
 
     def test_anonymized_production_regressions_fail_before_and_pass_after(self):
         manifest = json.loads(
@@ -506,7 +506,7 @@ class AuditRuleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             self._write_coverage_project(root)
-            results = audit.audit_app(root, self._coverage_metadata())
+            results = self._audit_coverage_project(root)
 
         rule_ids = {result[0] for result in results}
         self.assertGreater(len(rule_ids), len(baseline_ids))
@@ -532,7 +532,7 @@ class AuditRuleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             self._write_coverage_project(root)
-            results = audit.audit_app(root, self._coverage_metadata())
+            results = self._audit_coverage_project(root)
 
         advisories = [result for result in results if result[0].startswith("ADVISORY ")]
         self.assertGreater(len(advisories), 40)
@@ -1049,7 +1049,7 @@ struct PaywallView: View {
             encoding="utf-8",
         )
         (root / "LoginView.swift").write_text(
-            'import SwiftUI\nText("Continue with Google or Facebook")\n',
+            'import SwiftUI\nGIDSignIn.sharedInstance.signIn()\n',
             encoding="utf-8",
         )
         (root / "NotificationManager.swift").write_text(
@@ -1062,6 +1062,16 @@ struct PaywallView: View {
             "Transaction.updates\n",
             encoding="utf-8",
         )
+        (root / "CloudStore.swift").write_text(
+            'let rootRecordType = "FixtureRecord"\n',
+            encoding="utf-8",
+        )
+        (root / "AIClient.swift").write_text(
+            'let endpoint = "/api/ai"\n'
+            'let body = ["messages": []]\n'
+            'request.httpBody = encode(body)\n',
+            encoding="utf-8",
+        )
         for index in range(4):
             (root / f"Feature{index}View.swift").write_text(
                 "import SwiftUI\n"
@@ -1069,6 +1079,20 @@ struct PaywallView: View {
                 'var body: some View { Text("Feature") } }\n',
                 encoding="utf-8",
             )
+
+    def _audit_coverage_project(self, root):
+        response = mock.MagicMock()
+        response.__enter__.return_value.status = 200
+        with mock.patch.object(
+            audit.urllib.request, "urlopen", return_value=response
+        ) as urlopen:
+            results = audit.audit_app(root, self._coverage_metadata())
+        self.assertEqual(2, urlopen.call_count)
+        self.assertEqual(
+            {"https://example.com/privacy", "https://example.com/support"},
+            {call.args[0].full_url for call in urlopen.call_args_list},
+        )
+        return results
 
     @staticmethod
     def _coverage_metadata():
@@ -1093,6 +1117,8 @@ struct PaywallView: View {
             "appStoreAgeRating": "FOUR_PLUS",
             "appInfoState": "READY_FOR_SUBMISSION",
             "has_account": True,
+            "privacyPolicyUrl": "https://example.com/privacy",
+            "supportUrl": "https://example.com/support",
             "sub_state": "DEVELOPER_ACTION_NEEDED",
             "sub_territories": {"product.one": 1},
             "sub_states": [("product.one", "READY_TO_SUBMIT")],

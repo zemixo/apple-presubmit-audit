@@ -8,6 +8,10 @@
 
 ### Added
 
+- Deterministic triggering and non-triggering fixtures for the seven previously
+  unexercised sign-in, notification, URL, account, CloudKit, and AI-request rule
+  families. URL probes use test doubles; no live service or production-schema
+  verification is implied.
 - Standard-library regression tests for the baseline and conditional rule sets.
 - GitHub Actions coverage on Python 3.10 and 3.14.
 - A dependency manifest for local setup and CI.
@@ -69,6 +73,8 @@
 
 ### Fixed
 
+- Notification opt-in checks now use matched Swift content rather than matching
+  file names, so ordinary `NotificationManager.swift` files are checked too.
 - Made missing, non-directory, unreadable, and malformed CLI inputs fail
   consistently with exit code 2 and structured `--json` errors.
 - Resolved project paths before deriving report names, so `--project .` no
